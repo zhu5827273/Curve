@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurveControl", "CurveControl\CurveControl.csproj", "{A3D87FDF-5EFF-4180-B558-DE55EAD50CE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurveControl", "CurveControl\CurveControl.csproj", "{2F32A5C2-EFAA-4EEC-9407-A01A4D981858}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurveLibrary", "CurveLibrary\CurveLibrary.csproj", "{FC71F806-0A08-4553-AA59-A048187E64B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A3D87FDF-5EFF-4180-B558-DE55EAD50CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3D87FDF-5EFF-4180-B558-DE55EAD50CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3D87FDF-5EFF-4180-B558-DE55EAD50CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3D87FDF-5EFF-4180-B558-DE55EAD50CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F32A5C2-EFAA-4EEC-9407-A01A4D981858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F32A5C2-EFAA-4EEC-9407-A01A4D981858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F32A5C2-EFAA-4EEC-9407-A01A4D981858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F32A5C2-EFAA-4EEC-9407-A01A4D981858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC71F806-0A08-4553-AA59-A048187E64B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC71F806-0A08-4553-AA59-A048187E64B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC71F806-0A08-4553-AA59-A048187E64B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC71F806-0A08-4553-AA59-A048187E64B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
