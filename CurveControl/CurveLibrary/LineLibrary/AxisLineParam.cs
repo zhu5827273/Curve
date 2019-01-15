@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CurveLibrary.LineLibrary
 {
-    public class LineParam
+    public class AxisLineParam
     {
         public float MaxScale { set; get; }//最大刻度
         public float MinScale { set; get; }//最小刻度
@@ -14,6 +14,7 @@ namespace CurveLibrary.LineLibrary
         public LineDirection Direction { set; get; }//线的方向
         public ShowVirtualLine showVirtualLine { set; get; }//是否显示虚线
         public LineLocation lineLocation { set; get; }
+        public String Caption { set; get; }
 
     }
 }

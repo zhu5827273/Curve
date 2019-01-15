@@ -9,22 +9,13 @@ namespace CurveLibrary.LineLibrary
 {
     public class LineScale:BaseLine
     {
+        private float ScaleCount { set; get; }
         private List<PointF> listpointS = new List<PointF>();
         private List<PointF> listpointE = new List<PointF>();
-        private LineParam lp { set; get; }
-        float Hlength { set; get; }//纵向减去箭头的长度
-        float Vlength { set; get; }//横向向减去箭头的长度
-        private float ScaleCount { set; get; }
         private float cellLength { set; get; }
-        public LineScale(CanvasParam _cp, LineParam lp)
+        public LineScale(CanvasParam _cp, AxisLineParam lp):base(_cp,lp)
         {
-            cp = _cp;
-            this.lp = lp;
-            StartPointX = cp.OriginX;
-            StartPointY = cp.OriginY;
-            ScaleCount = (lp.MaxScale - lp.MinScale) / lp.CellScale;//计算多少刻度
-            Hlength = cp.HorizontalLength - cp.ArrowLength - cp.BlankLegend;//减去箭头的长度
-            Vlength = cp.VerticalLength - cp.ArrowLength - cp.BlankLegend;
+            ScaleCount = (lp.MaxScale - lp.MinScale) / lp.CellScale;//计算多少数量
         }
         public override void Draw(Pen p)
         {
@@ -35,7 +26,7 @@ namespace CurveLibrary.LineLibrary
                 return;
             }
             FontFamily fontFamily = new FontFamily("Arial");
-            Font font = new Font(fontFamily, 12, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
             string strVlaue = "";
             float showVlaue = 0;
             for (int i = 0; i < (ScaleCount+1); i++)
@@ -43,45 +34,45 @@ namespace CurveLibrary.LineLibrary
                 cp.g.DrawLine(pen, listpointS[i], listpointE[i]);
                 if (lp.Direction == LineDirection.Vertical)
                 {
-                    StringFormat sf = new StringFormat();
-                    sf.Alignment = StringAlignment.Center;
-                    cp.g.DrawString((lp.MinScale + i * lp.CellScale).ToString(), font, Brushes.Black, listpointE[i].X, listpointE[i].Y,sf);
-                }
-                else
-                {
                     showVlaue = lp.MinScale + i * lp.CellScale;
                     if (lp.lineLocation == LineLocation.Left)
                     {
                         StringFormat sf = new StringFormat();
                         sf.FormatFlags = StringFormatFlags.DirectionRightToLeft;
-                        strVlaue = showVlaue < 0 ? Math.Abs(showVlaue).ToString()+ "-" : (showVlaue).ToString();
+                        strVlaue = showVlaue < 0 ? Math.Abs(showVlaue).ToString() + "-" : (showVlaue).ToString();
                         cp.g.DrawString(strVlaue, font, Brushes.Black, listpointE[i].X - cp.ScalePadding, listpointE[i].Y - 7, sf);
                     }
                     else
                     {
                         StringFormat sf = new StringFormat();
                         sf.Alignment = StringAlignment.Center;
-                        cp.g.DrawString(showVlaue.ToString(), font, Brushes.Black, listpointE[i].X + cp.ScalePadding, listpointE[i].Y -7, sf);
+                        cp.g.DrawString(showVlaue.ToString(), font, Brushes.Black, listpointE[i].X + cp.ScalePadding, listpointE[i].Y - 7, sf);
                     }
+                }
+                else
+                {
+                    StringFormat sf = new StringFormat();
+                    sf.Alignment = StringAlignment.Center;
+                    cp.g.DrawString((lp.MinScale + i * lp.CellScale).ToString(), font, Brushes.Black, listpointE[i].X, listpointE[i].Y, sf);
                     
                 }
                 
             }
         }
         //竖向
-        private void calculateHorizontal()
+        private void calculateVertical()
         {
             cellLength = Vlength / ScaleCount;//求单位长度
             if (lp.lineLocation == LineLocation.Left)
             {
-                calculateHorizontalLeft();
+                calculateVerticalLeft();
             }
             else
             {
-                calculateHorizontalRight();
+                calculateVerticalRight();
             }
         }
-        private void calculateHorizontalRight()
+        private void calculateVerticalRight()
         {
             cellLength = Vlength / ScaleCount;//求单位长度
             for (int i = 0; i < (ScaleCount + 1); i++)
@@ -96,7 +87,7 @@ namespace CurveLibrary.LineLibrary
                 listpointE.Add(pfE);
             }
         }
-        private void calculateHorizontalLeft()
+        private void calculateVerticalLeft()
         {
             cellLength = Vlength / ScaleCount;//求单位长度
             for (int i = 0; i < (ScaleCount+1); i++)
@@ -112,7 +103,7 @@ namespace CurveLibrary.LineLibrary
             }
         }
         //横向刻度
-        private void calculateVertical()
+        private void calculateHorizontal()
         {
             cellLength = Hlength / ScaleCount;//求单位长度
             for (int i = 0; i < (ScaleCount + 1); i++)

@@ -9,11 +9,9 @@ namespace CurveLibrary.LineLibrary
 {
     public class AxisLine:BaseLine
     {
-        public LineParam lp { set; get; }
-        public AxisLine(CanvasParam _cp, LineParam lp)
+       
+        public AxisLine(CanvasParam _cp, AxisLineParam lp):base(_cp,lp)
         {
-            cp = _cp;
-            this.lp = lp;
         }
         public override void Draw(Pen p)
         {
@@ -28,7 +26,6 @@ namespace CurveLibrary.LineLibrary
             LineScale ls = new LineScale(cp, lp);//刻度线
             ls.Draw(p);
         }
-
         private void arrow(SolidBrush b)
         {
             float arrowLength = cp.ArrowLength;
@@ -50,6 +47,7 @@ namespace CurveLibrary.LineLibrary
                 points[2].Y = EndPointY - arrowLength / 2;
             }
             cp.g.FillPolygon(b, points);
+            DrawLegend(EndPointX, EndPointY);
         }
         private void calculate()
         {
@@ -65,6 +63,35 @@ namespace CurveLibrary.LineLibrary
                 EndPointX = cp.OriginX + cp.HorizontalLength;
                 EndPointY = cp.OriginY;
             }
+        }
+        private void DrawLegend(float PointX,float PointY)
+        {
+            FontFamily fontFamily = new FontFamily("Arial");
+            Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+            StringFormat sf = new StringFormat();
+            if (lp.Direction == LineDirection.Vertical)
+            {
+                //sf.Alignment = StringAlignment.Far;
+                if (lp.lineLocation == LineLocation.Left)
+                {
+                    sf.Alignment = StringAlignment.Far;
+                    PointY = PointY+cp.BlankLegend/2;
+                    //PointX = PointX;
+                }
+                else
+                {
+                    sf.Alignment = StringAlignment.Near;
+                    PointY = PointY + cp.BlankLegend / 2;
+                    PointX = PointX + 20;
+                }
+            }
+            else
+            {
+                sf.Alignment = StringAlignment.Near;
+                PointY = PointY+5;
+                PointX = PointX-cp.BlankLegend;
+            }
+            cp.g.DrawString(lp.Caption, font, Brushes.Black, PointX, PointY, sf);
         }
     }
 }

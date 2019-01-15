@@ -27,38 +27,32 @@ namespace CurveControl
             canvasparam.OriginX = 43;
             canvasparam.OriginY = 355;
             canvasparam.VerticalLength = 350;
-            canvasparam.HorizontalLength = 1000;
-            canvasparam.BlankLegend = 10;
+            canvasparam.HorizontalLength = 600;
+            canvasparam.BlankLegend = 30;
             canvasparam.ScaleLength = 5;
             canvasparam.ScalePadding =0;
-            LineParam bHParam = new LineParam();
+
+            AxisLineParam bHParam = new AxisLineParam();
             bHParam.Direction = LineDirection.Horizontal;
-            bHParam.MaxScale = 80;
-            bHParam.MinScale = -40;
+            bHParam.MaxScale = 60;
+            bHParam.MinScale = 0;
             bHParam.CellScale = 10;
             bHParam.showVirtualLine = ShowVirtualLine.Visible;
-            AxisLine bH = new AxisLine(canvasparam,bHParam);
+            bHParam.Caption = "时间(分)";
+            BaseLine bH = new AxisLine(canvasparam,bHParam);
             bH.Draw(p);        
 
-            LineParam bVParam = new LineParam();
-            bVParam.Direction = LineDirection.Vertical;
+            AxisLineParam bVParam = new AxisLineParam();
+            bVParam.Direction = LineDirection.Vertical; 
             bVParam.showVirtualLine = ShowVirtualLine.Visible;
-            bVParam.MaxScale = 115;
-            bVParam.MinScale = 0;
-            bVParam.CellScale = 5;
-            AxisLine bV = new AxisLine(canvasparam, bVParam);
-            bV.Draw(p);          
+            bVParam.MaxScale = 40;
+            bVParam.MinScale = -40;
+            bVParam.CellScale = 10;
+            bVParam.Caption = "温度/℃";
+            BaseLine bV = new AxisLine(canvasparam, bVParam);
+            bV.Draw(p);         
+             
         }
-
-        private void Form1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_MouseDown(object sender, MouseEventArgs e)
-        {
-            
-        }
-
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             label1.Text = "X:" + e.X.ToString() + " Y:" + e.Y.ToString();

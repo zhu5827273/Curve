@@ -27,6 +27,17 @@ namespace CurveLibrary
         //隐藏
         Hide=1
     }
+    public enum DataUnit
+    {
+
+        //分钟
+        Min=0,
+        //秒
+        Seconds=1,
+        //小时
+        Hours=2
+
+    }
     public class ZCanvascs
     {
         public void DrawCanvas()

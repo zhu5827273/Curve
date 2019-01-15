@@ -44,7 +44,9 @@
     <Compile Include="CanvasParam.cs" />
     <Compile Include="LineLibrary\AxisLine.cs" />
     <Compile Include="LineLibrary\BaseLine.cs" />
-    <Compile Include="LineLibrary\LineParam.cs" />
+    <Compile Include="LineLibrary\DataLine.cs" />
+    <Compile Include="LineLibrary\AxisLineParam.cs" />
+    <Compile Include="LineLibrary\LineDataModel.cs" />
     <Compile Include="LineLibrary\LineScale.cs" />
     <Compile Include="LineLibrary\VirtualLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
