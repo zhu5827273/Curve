@@ -9,14 +9,13 @@ namespace CurveLibrary.LineLibrary
 {
   public abstract class BaseLine
     {
-        public BaseLine(CanvasParam _cp, AxisLineParam lp)
+        public BaseLine(CanvasParam _cp)
         {
             this.cp = _cp;
-            this.lp = lp;
             StartPointX = cp.OriginX;
             StartPointY = cp.OriginY;
-            Hlength = cp.HorizontalLength - cp.ArrowLength - cp.BlankLegend;//减去箭头的长度
-            Vlength = cp.VerticalLength - cp.ArrowLength - cp.BlankLegend;
+            Hlength = cp.HorizontalLength - cp.ArrowLength - cp.BlankLegend;//减去箭头的长度以及空白长度
+            Vlength = cp.VerticalLength - cp.ArrowLength - cp.BlankLegend;//减去箭头的长度以及空白长度
         }
         public CanvasParam cp { set; get; }
         //规定箭头方向为结束方向
@@ -25,7 +24,7 @@ namespace CurveLibrary.LineLibrary
         public float StartPointY { get; set; }
         public float EndPointX { get; set; }
         public float EndPointY { set; get; }    
-        public AxisLineParam lp { set; get; }
+        
         public float Hlength { set; get; }//纵向减去箭头的长度以及空白长度
         public float Vlength { set; get; }//横向减去箭头的长度以及空白长度
         public abstract void Draw(Pen p);

@@ -19,6 +19,7 @@ namespace CurveControl
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            List<AxisLineParam> listAxisParam = new List<AxisLineParam>();
             Pen p = new Pen(Color.Blue, 1);
             Graphics g = this.CreateGraphics();
             CanvasParam canvasparam = new CanvasParam();
@@ -39,6 +40,7 @@ namespace CurveControl
             bHParam.CellScale = 10;
             bHParam.showVirtualLine = ShowVirtualLine.Visible;
             bHParam.Caption = "时间(分)";
+            bHParam.Attributes = "Time";
             BaseLine bH = new AxisLine(canvasparam,bHParam);
             bH.Draw(p);        
 
@@ -49,8 +51,12 @@ namespace CurveControl
             bVParam.MinScale = -40;
             bVParam.CellScale = 10;
             bVParam.Caption = "温度/℃";
+            bVParam.Attributes = "Temp";
             BaseLine bV = new AxisLine(canvasparam, bVParam);
-            bV.Draw(p);         
+            bV.Draw(p);
+
+            listAxisParam.Add(bVParam);
+            listAxisParam.Add(bHParam);
              
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)

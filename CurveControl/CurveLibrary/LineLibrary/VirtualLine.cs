@@ -11,11 +11,13 @@ namespace CurveLibrary.LineLibrary
     public class VirtualLine : BaseLine
     {
         private float ScaleCount { set; get; }
+        private AxisLineParam lp { set; get; }
         private List<PointF> listpointS = new List<PointF>();
         private List<PointF> listpointE = new List<PointF>();
         private float cellLength { set; get; }
-        public VirtualLine(CanvasParam _cp, AxisLineParam lp):base(_cp,lp)
+        public VirtualLine(CanvasParam _cp, AxisLineParam lp):base(_cp)
         {
+            this.lp = lp;
             ScaleCount = (lp.MaxScale - lp.MinScale) / lp.CellScale;//计算多少数量
         }
         public override void Draw(Pen p)

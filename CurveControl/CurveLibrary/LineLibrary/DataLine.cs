@@ -11,19 +11,21 @@ namespace CurveLibrary.LineLibrary
     {
         public List<LineDataModel> listData = new List<LineDataModel>();
         private List<PointF> data = new List<PointF>();
-        public DataLine(CanvasParam _cp, AxisLineParam lp):base(_cp,lp)
+        public String Caption { set; get; }
+        public String Attributes { set; get; }
+        private AxisLineParam Vlp { set; get; }
+        private AxisLineParam Hlp { set; get; }
+        public DataLine(CanvasParam _cp, List<AxisLineParam> listCP):base(_cp)
         {
-            //cp = _cp;
-            //this.lp = lp;
-            //StartPointX = cp.OriginX;
-            //StartPointY = cp.OriginY;
-            //ScaleCount = (lp.MaxScale - lp.MinScale) / lp.CellScale;//计算多少刻度
-            //Hlength = cp.HorizontalLength - cp.ArrowLength - cp.BlankLegend;//减去箭头的长度
-            //Vlength = cp.VerticalLength - cp.ArrowLength - cp.BlankLegend;
+            this.Hlp = listCP.Find(t => t.Attributes == "Time");
+            this.Vlp = listCP.Find(t => t.Attributes == Attributes);
         }
         public override void Draw(Pen p)
         {
             throw new NotImplementedException();
+        }
+        private void calculate()
+        {
         }
     }
 }

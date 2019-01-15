@@ -13,8 +13,10 @@ namespace CurveLibrary.LineLibrary
         private List<PointF> listpointS = new List<PointF>();
         private List<PointF> listpointE = new List<PointF>();
         private float cellLength { set; get; }
-        public LineScale(CanvasParam _cp, AxisLineParam lp):base(_cp,lp)
+        private AxisLineParam lp { set; get; }
+        public LineScale(CanvasParam _cp, AxisLineParam lp):base(_cp)
         {
+            this.lp = lp;
             ScaleCount = (lp.MaxScale - lp.MinScale) / lp.CellScale;//计算多少数量
         }
         public override void Draw(Pen p)

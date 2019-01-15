@@ -10,8 +10,10 @@ namespace CurveLibrary.LineLibrary
     public class AxisLine:BaseLine
     {
        
-        public AxisLine(CanvasParam _cp, AxisLineParam lp):base(_cp,lp)
+        private AxisLineParam lp { set; get; }
+        public AxisLine(CanvasParam _cp, AxisLineParam lp):base(_cp)
         {
+            this.lp = lp;
         }
         public override void Draw(Pen p)
         {

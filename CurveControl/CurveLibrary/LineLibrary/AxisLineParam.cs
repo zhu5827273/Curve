@@ -15,6 +15,7 @@ namespace CurveLibrary.LineLibrary
         public ShowVirtualLine showVirtualLine { set; get; }//是否显示虚线
         public LineLocation lineLocation { set; get; }
         public String Caption { set; get; }
+        public String Attributes { set; get; }
 
     }
 }
