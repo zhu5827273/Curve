@@ -31,11 +31,11 @@ namespace CurveLibrary
     {
 
         //分钟
-        Min=0,
+        M=0,
         //秒
-        Seconds=1,
+        S=1,
         //小时
-        Hours=2
+        H=2
 
     }
     public class ZCanvascs

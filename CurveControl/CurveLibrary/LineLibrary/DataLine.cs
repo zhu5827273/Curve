@@ -9,23 +9,61 @@ namespace CurveLibrary.LineLibrary
 {
     public class DataLine : BaseLine
     {
-        public List<LineDataModel> listData = new List<LineDataModel>();
+        public List<LineDataModel> listData { set; get; }
         private List<PointF> data = new List<PointF>();
         public String Caption { set; get; }
-        public String Attributes { set; get; }
+        //public String Attributes { set; get; }
+        public Color color { set; get; }//线颜色
+        public float lineWith { set; get; }//线粗细
         private AxisLineParam Vlp { set; get; }
         private AxisLineParam Hlp { set; get; }
-        public DataLine(CanvasParam _cp, List<AxisLineParam> listCP):base(_cp)
+        private float HUnit{ set; get; }//横向单位刻度以分钟为基准
+        private float VUnit { set; get; }//竖向单位以1位单位
+        public DataLine(CanvasParam _cp, List<AxisLineParam> listCP,string Attributes) :base(_cp)
         {
+            lineWith = 0;
+            color = Color.Red;
             this.Hlp = listCP.Find(t => t.Attributes == "Time");
             this.Vlp = listCP.Find(t => t.Attributes == Attributes);
         }
         public override void Draw(Pen p)
         {
-            throw new NotImplementedException();
+            calculate();
+            p.Width = lineWith;
+            p.Color = color;
+            PointF[] pfdata= data.ToArray();
+            cp.g.DrawLines(p,pfdata);
         }
         private void calculate()
         {
+            if (listData==null)
+            {
+                return;
+            }
+            HUnit = Hlength / (Hlp.MaxScale - Hlp.MinScale);
+            VUnit = Vlength / (Vlp.MaxScale - Vlp.MinScale);
+            for (int i = 0; i < listData.Count; i++)
+            {
+                PointF pf = new PointF();
+                if (listData[i].dataUnit == DataUnit.M)
+                {
+                    pf.X =StartPointX+ (i+1) * HUnit*listData[i].Times;
+                }
+                else if (listData[i].dataUnit == DataUnit.S)
+                {
+                    pf.X = StartPointX+(i + 1) * (HUnit / 60) * listData[i].Times;
+                }
+                else
+                {
+                    pf.X = StartPointX+(i + 1) * (HUnit *60) * listData[i].Times;
+                }
+                pf.Y =StartPointY-(listData[i].Values-Vlp.MinScale) * VUnit;
+                if (pf.X>Hlength+StartPointX)
+                {
+                    break;
+                }
+                data.Add(pf);
+            }
         }
     }
 }

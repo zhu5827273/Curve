@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CurveLibrary;
 using CurveLibrary.LineLibrary;
+using System.Threading;
+
 namespace CurveControl
 {
     public partial class Form1 : Form
@@ -17,12 +19,14 @@ namespace CurveControl
         {
             InitializeComponent();
         }
+        List<AxisLineParam> listAxisParam = new List<AxisLineParam>();
+        CanvasParam canvasparam = new CanvasParam();
+        Pen p = new Pen(Color.Blue, 1);
         private void button1_Click(object sender, EventArgs e)
         {
-            List<AxisLineParam> listAxisParam = new List<AxisLineParam>();
-            Pen p = new Pen(Color.Blue, 1);
             Graphics g = this.CreateGraphics();
-            CanvasParam canvasparam = new CanvasParam();
+            this.DoubleBuffered = true;
+
             canvasparam.ArrowLength = 6;
             canvasparam.g = g;
             canvasparam.OriginX = 43;
@@ -55,13 +59,49 @@ namespace CurveControl
             BaseLine bV = new AxisLine(canvasparam, bVParam);
             bV.Draw(p);
 
+            AxisLineParam PowerParam = new AxisLineParam();
+            PowerParam.Direction = LineDirection.Vertical;
+            PowerParam.showVirtualLine = ShowVirtualLine.Hide;
+            PowerParam.lineLocation = LineLocation.Right;
+            PowerParam.MaxScale = 500;
+            PowerParam.MinScale = 0;
+            PowerParam.CellScale = 100;
+            PowerParam.Caption = "功率";
+            PowerParam.Attributes = "Power";
+            BaseLine bPower = new AxisLine(canvasparam, PowerParam);
+            bPower.Draw(p);
+
             listAxisParam.Add(bVParam);
             listAxisParam.Add(bHParam);
-             
+            listAxisParam.Add(PowerParam);
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             label1.Text = "X:" + e.X.ToString() + " Y:" + e.Y.ToString();
+        }
+        private List<LineDataModel> CreateData(int count)
+        {
+            List<LineDataModel> data = new List<LineDataModel>();
+            Random rd = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                LineDataModel ldm = new LineDataModel();
+                ldm.dataUnit = DataUnit.M;
+                ldm.Times = 0.05F;
+                ldm.Values = rd.Next(-20,20);
+                data.Add(ldm);
+            }
+            return data;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DataLine dl = new DataLine(canvasparam, listAxisParam, "Temp");
+            //dl.Attributes = "Temp";
+            dl.lineWith = 2;
+            dl.listData = CreateData(3000);
+            //Thread.Sleep(500);
+            dl.Draw(p);
         }
     }
 }
