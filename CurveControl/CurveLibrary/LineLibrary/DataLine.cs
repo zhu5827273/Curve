@@ -47,17 +47,17 @@ namespace CurveLibrary.LineLibrary
                 PointF pf = new PointF();
                 if (listData[i].dataUnit == DataUnit.M)
                 {
-                    pf.X =StartPointX+ (i+1) * HUnit*listData[i].Times;
+                    pf.X =cp.OriginX+ (i+1) * HUnit*listData[i].Times;
                 }
                 else if (listData[i].dataUnit == DataUnit.S)
                 {
-                    pf.X = StartPointX+(i + 1) * (HUnit / 60) * listData[i].Times;
+                    pf.X = cp.OriginX + (i + 1) * (HUnit / 60) * listData[i].Times;
                 }
                 else
                 {
-                    pf.X = StartPointX+(i + 1) * (HUnit *60) * listData[i].Times;
+                    pf.X = cp.OriginX + (i + 1) * (HUnit *60) * listData[i].Times;
                 }
-                pf.Y =StartPointY-(listData[i].Values-Vlp.MinScale) * VUnit;
+                pf.Y =cp.OriginY-(listData[i].Values-Vlp.MinScale) * VUnit;
                 if (pf.X>Hlength+StartPointX)
                 {
                     break;

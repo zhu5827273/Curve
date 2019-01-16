@@ -68,6 +68,7 @@ namespace CurveControl
             PowerParam.CellScale = 100;
             PowerParam.Caption = "功率";
             PowerParam.Attributes = "Power";
+            PowerParam.Index = 0;
             BaseLine bPower = new AxisLine(canvasparam, PowerParam);
             bPower.Draw(p);
 

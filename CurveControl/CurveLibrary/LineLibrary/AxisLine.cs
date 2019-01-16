@@ -9,8 +9,6 @@ namespace CurveLibrary.LineLibrary
 {
     public class AxisLine:BaseLine
     {
-       
-
         private AxisLineParam lp { set; get; }
         public AxisLine(CanvasParam _cp, AxisLineParam lp):base(_cp)
         {
@@ -56,10 +54,20 @@ namespace CurveLibrary.LineLibrary
         {
             if (lp.Direction == LineDirection.Vertical)
             {
-                StartPointX = cp.OriginX;
-                StartPointY = cp.OriginY;
-                EndPointX = cp.OriginX;
-                EndPointY = StartPointY - cp.VerticalLength;
+                if (lp.lineLocation == LineLocation.Left)
+                {
+                    StartPointX = cp.OriginX;
+                    StartPointY = cp.OriginY;
+                    EndPointX = cp.OriginX;
+                    EndPointY = StartPointY - cp.VerticalLength;
+                }
+                else
+                {
+                    StartPointX = cp.OriginX + Hlength+lp.Index*10;
+                    StartPointY = cp.OriginY;
+                    EndPointX = cp.OriginX + Hlength+lp.Index * 10;
+                    EndPointY = StartPointY - cp.VerticalLength;
+                }
             }
             else
             {
@@ -81,13 +89,11 @@ namespace CurveLibrary.LineLibrary
                 {
                     sf.Alignment = StringAlignment.Far;
                     PointY = PointY+cp.BlankLegend/2;
-                    //PointX = PointX;
                 }
                 else
                 {
                     sf.Alignment = StringAlignment.Near;
                     PointY = PointY + cp.BlankLegend / 2;
-                    PointX = PointX + 20;
                 }
             }
             else

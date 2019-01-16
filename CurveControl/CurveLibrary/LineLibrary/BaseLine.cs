@@ -23,8 +23,7 @@ namespace CurveLibrary.LineLibrary
         public float StartPointX { set; get; }
         public float StartPointY { get; set; }
         public float EndPointX { get; set; }
-        public float EndPointY { set; get; }    
-        
+        public float EndPointY { set; get; }       
         public float Hlength { set; get; }//纵向减去箭头的长度以及空白长度
         public float Vlength { set; get; }//横向减去箭头的长度以及空白长度
         public abstract void Draw(Pen p);

@@ -16,6 +16,6 @@ namespace CurveLibrary.LineLibrary
         public LineLocation lineLocation { set; get; }
         public String Caption { set; get; }
         public String Attributes { set; get; }
-
+        public int Index { set; get; }
     }
 }

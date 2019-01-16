@@ -47,7 +47,7 @@ namespace CurveLibrary.LineLibrary
                     else
                     {
                         StringFormat sf = new StringFormat();
-                        sf.Alignment = StringAlignment.Center;
+                        sf.Alignment = StringAlignment.Near;
                         cp.g.DrawString(showVlaue.ToString(), font, Brushes.Black, listpointE[i].X + cp.ScalePadding, listpointE[i].Y - 7, sf);
                     }
                 }
@@ -81,10 +81,10 @@ namespace CurveLibrary.LineLibrary
             {
                 PointF pfS = new PointF();
                 PointF pfE = new PointF();
-                pfS.X = StartPointX;
-                pfS.Y = StartPointY - cellLength * (i + 1);
-                pfE.X = StartPointX + cp.ScaleLength;
-                pfE.Y = StartPointY - cellLength * (i + 1);
+                pfS.X = StartPointX+Hlength;
+                pfS.Y = StartPointY - cellLength * i;
+                pfE.X = StartPointX + Hlength + cp.ScaleLength;
+                pfE.Y = StartPointY - cellLength * i;
                 listpointS.Add(pfS);
                 listpointE.Add(pfE);
             }
