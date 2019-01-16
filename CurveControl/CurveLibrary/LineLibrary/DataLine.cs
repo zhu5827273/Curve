@@ -10,6 +10,8 @@ namespace CurveLibrary.LineLibrary
     public class DataLine : BaseLine
     {
         public List<LineDataModel> listData { set; get; }
+        public List<AxisLineParam> listCP { set; get; }
+        public string Attributes { set; get; }
         private List<PointF> data = new List<PointF>();
         public String Caption { set; get; }
         //public String Attributes { set; get; }
@@ -23,8 +25,13 @@ namespace CurveLibrary.LineLibrary
         {
             lineWith = 0;
             color = Color.Red;
+            // this.Attributes = Attributes;
             this.Hlp = listCP.Find(t => t.Attributes == "Time");
             this.Vlp = listCP.Find(t => t.Attributes == Attributes);
+        }
+        private void findLineParam()
+        {
+
         }
         public override void Draw(Pen p)
         {
@@ -40,6 +47,7 @@ namespace CurveLibrary.LineLibrary
             {
                 return;
             }
+            findLineParam();
             HUnit = Hlength / (Hlp.MaxScale - Hlp.MinScale);
             VUnit = Vlength / (Vlp.MaxScale - Vlp.MinScale);
             for (int i = 0; i < listData.Count; i++)

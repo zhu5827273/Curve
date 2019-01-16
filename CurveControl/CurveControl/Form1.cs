@@ -10,38 +10,63 @@ using System.Windows.Forms;
 using CurveLibrary;
 using CurveLibrary.LineLibrary;
 using System.Threading;
+using System.Diagnostics;
 
 namespace CurveControl
 {
     public partial class Form1 : Form
     {
+        Random rd = new Random();
         public Form1()
         {
             InitializeComponent();
+            th = new Thread(new ThreadStart(Run));
         }
-        List<AxisLineParam> listAxisParam = new List<AxisLineParam>();
-        CanvasParam canvasparam = new CanvasParam();
-        Pen p = new Pen(Color.Blue, 1);
+        public void Run()
+        {
+            while(true)
+            {
+                int a = 1;
+                textBox1.Invoke(new Action(()=> {
+                    a = rd.Next(40000, 60000);
+                    textBox1.Text =a.ToString();
+                }));
+              Stopwatch stopwatch = new Stopwatch();
+              stopwatch.Start();
+                button1_Click(null, null);
+                Console.WriteLine("数据："+ a.ToString()+" 运行时间："+stopwatch.ElapsedMilliseconds);
+                stopwatch.Restart();
+                stopwatch.Stop();
+              // Thread.Sleep(50);
+            }
+        }
+        
+        Thread th = null;
+        BufferedGraphicsContext currentContext = BufferedGraphicsManager.Current;
+
         private void button1_Click(object sender, EventArgs e)
         {
-            Graphics g = this.CreateGraphics();
+            List<AxisLineParam> listAxisParam = new List<AxisLineParam>();
+            CanvasParam canvasparam = new CanvasParam();
+            Pen p = new Pen(Color.Blue, 1); 
+            BufferedGraphics myBuffer = currentContext.Allocate(panel1.CreateGraphics(), panel1.ClientRectangle);
+            Graphics g = myBuffer.Graphics;
+            g.Clear(this.BackColor);
             this.DoubleBuffered = true;
-
             canvasparam.ArrowLength = 6;
             canvasparam.g = g;
             canvasparam.OriginX = 43;
             canvasparam.OriginY = 355;
             canvasparam.VerticalLength = 350;
-            canvasparam.HorizontalLength = 600;
+            canvasparam.HorizontalLength =1000;
             canvasparam.BlankLegend = 30;
             canvasparam.ScaleLength = 5;
             canvasparam.ScalePadding =0;
-
             AxisLineParam bHParam = new AxisLineParam();
             bHParam.Direction = LineDirection.Horizontal;
-            bHParam.MaxScale = 60;
+            bHParam.MaxScale =100000;
             bHParam.MinScale = 0;
-            bHParam.CellScale = 10;
+            bHParam.CellScale = 10000;
             bHParam.showVirtualLine = ShowVirtualLine.Visible;
             bHParam.Caption = "时间(分)";
             bHParam.Attributes = "Time";
@@ -71,10 +96,16 @@ namespace CurveControl
             PowerParam.Index = 0;
             BaseLine bPower = new AxisLine(canvasparam, PowerParam);
             bPower.Draw(p);
-
             listAxisParam.Add(bVParam);
             listAxisParam.Add(bHParam);
             listAxisParam.Add(PowerParam);
+            DataLine dl = new DataLine(canvasparam, listAxisParam, "Temp");
+            dl.lineWith = 2;
+            dl.listData = CreateData(Convert.ToInt32(textBox1.Text));
+            dl.Draw(p);
+            myBuffer.Render();
+            myBuffer.Dispose();
+            g.Dispose();
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -88,7 +119,7 @@ namespace CurveControl
             {
                 LineDataModel ldm = new LineDataModel();
                 ldm.dataUnit = DataUnit.M;
-                ldm.Times = 0.05F;
+                ldm.Times = 1F;
                 ldm.Values = rd.Next(-20,20);
                 data.Add(ldm);
             }
@@ -97,12 +128,40 @@ namespace CurveControl
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DataLine dl = new DataLine(canvasparam, listAxisParam, "Temp");
-            //dl.Attributes = "Temp";
-            dl.lineWith = 2;
-            dl.listData = CreateData(3000);
-            //Thread.Sleep(500);
-            dl.Draw(p);
+            panel1.Width = 1200;
+            th.Start();
+            //DataLine dl = new DataLine(canvasparam, listAxisParam, "Temp");
+            ////dl.Attributes = "Temp";
+            //dl.lineWith = 2;
+            //dl.listData = CreateData(3000);
+            ////Thread.Sleep(500);
+            //dl.Draw(p);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+           // button1_Click(null, null);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Environment.Exit(0);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Environment.Exit(0);
         }
     }
 }
